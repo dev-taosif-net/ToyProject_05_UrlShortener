@@ -43,3 +43,62 @@ jobs:
         with:
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./Infrastructure/main.bicep
+  deploy-stg:
+    runs-on: ubuntu-latest
+    environment: Staging
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2.1.1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Create Azure Resource Group
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
+            echo "Azure resource group created"
+
+      - name: Deploy Bicep template
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./Infrastructure/main.bicep
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment: Production
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2.1.1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Create Azure Resource Group
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
+            echo "Azure resource group created"
+
+      - name: Deploy Bicep template
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./Infrastructure/main.bicep
+  
