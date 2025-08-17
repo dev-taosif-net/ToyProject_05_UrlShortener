@@ -49,7 +49,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ vars.API_RESOURCE_NAME }}
+          app-name: api-url-bdg7tszmm5svc
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
           package: .
