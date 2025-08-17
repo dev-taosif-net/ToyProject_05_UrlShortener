@@ -4,8 +4,8 @@ var uniqueId = uniqueString(resourceGroup().id)
 module appService 'Module/Compute/appservice.bicep' = {
   name: 'apiDeployment'
   params: {
-    appName: 'api-${uniqueId}'
-    appServicePlanName: 'plan-api-${uniqueId}'
+    appName: 'api-url-${uniqueId}'
+    appServicePlanName: 'plan-api-url-${uniqueId}'
     location: location
   }
 }
