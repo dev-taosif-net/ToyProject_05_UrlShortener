@@ -15,5 +15,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/", () => "Hello From API");
-
 app.Run();
